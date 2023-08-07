@@ -2,7 +2,7 @@ import React from "react";
 import { easing } from "maath";
 import { useSnapshot } from "valtio";
 import { useFrame } from "@react-three/fiber";
-import { Decal, useGLTF, useTexture } from "@react-three/drei";
+import { Decal, useGLTF, useTexture, OrbitControls } from "@react-three/drei";
 import state from "../store";
 
 const Shirt = () => {
@@ -15,6 +15,8 @@ const Shirt = () => {
   useFrame((state, delta) => {
     easing.dampC(materials.lambert1.color, snap.color, 0.52, delta)
   })
+
+  
 
   const stateString = JSON.stringify(snap);
 
@@ -45,9 +47,12 @@ const Shirt = () => {
             depthTest={false}
             depthWrite={true}
           />
+
+          
         )}
       </mesh>
     </group>
+    
   );
 };
 
