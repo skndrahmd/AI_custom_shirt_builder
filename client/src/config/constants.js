@@ -1,4 +1,4 @@
-import { swatch, fileIcon, ai, logoShirt, stylishShirt } from "../assets";
+import { swatch, fileIcon, ai, logoShirt, stylishShirt, download } from "../assets";
 
 export const EditorTabs = [
   {
@@ -26,6 +26,11 @@ export const FilterTabs = [
   },
 ];
 
+export const DownloadTab = {
+  name: "download",
+  icon: download,
+};
+
 export const DecalTypes = {
   logo: {
     stateProperty: "logoDecal",
@@ -35,4 +40,18 @@ export const DecalTypes = {
     stateProperty: "fullDecal",
     filterTab: "stylishShirt",
   },
+};
+
+
+export const TextureConfig = {
+  full: {
+    position: [0, 0, 0],
+    rotation: [0, 0, 0],
+    scale: [1, 1, 1],
+  },
+  logo: {
+    position: [0, 0.04, 0.15],
+    rotation: [0, 0, 0],
+    scale: 0.15,
+  }
 };
