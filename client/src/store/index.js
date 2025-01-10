@@ -6,7 +6,7 @@ const state = proxy({
     color: '#252B48',
     isLogoTexture: true,
     isFullTexture: false, 
-    logoDecal: './threejs.png',
+    logoDecal: './scrift_logo.png',
     fullDecal: './threejs.png',
      
 });

@@ -11,8 +11,7 @@ const Shirt = () => {
 
   // Load textures
   const logoTexture = useTexture(snap.logoDecal);
-  const fullTexture = useTexture(snap.fullDecal);
-  const scriftLogoTexture = useTexture("/scrift_logo.png"); // Load the scrift_logo.png
+  const fullTexture = useTexture(snap.fullDecal); // Load the scrift_logo.png
 
   // Initialize material
   const material = new MeshStandardMaterial({
@@ -45,13 +44,15 @@ const Shirt = () => {
         material={material}
         dispose={null}
       >
-        {/* Apply the scrift_logo on the chest area */}
-        <Decal
-  position={[-0.02, -0.02, 0.15]} // Adjusted values
-  rotation={[0, 0, 0]}
-  scale={0.15} // Slightly reduced scale for better proportion
-  map={scriftLogoTexture}
-/>
+        {/* Only render the logo decal if isLogoTexture is true */}
+        {snap.isLogoTexture && (
+          <Decal
+            position={[-0.02, -0.02, 0.15]}
+            rotation={[0, 0, 0]}
+            scale={0.15}
+            map={logoTexture}
+          />
+        )}
       </mesh>
     </group>
   );

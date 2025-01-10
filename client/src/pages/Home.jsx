@@ -29,7 +29,7 @@ const Home = () => {
           <motion.div className="home-content" {...headContainerAnimation}>
             <motion.div {...headTextAnimation}>
               <h1 className="text-left text-8xl font-black text-gray-50">
-                CUSTOMIZE.
+                SCRIFTOMIZE.
               </h1>
             </motion.div>
             <motion.div
@@ -42,7 +42,7 @@ const Home = () => {
 
               <Custombutton 
                 type="filled"
-                title="Customize It"
+                title="Customize"
                 handleClick={() => state.intro = false}
                 customStyles="w-fit px-4 py-2.5 font-bold text-sm"
               />
