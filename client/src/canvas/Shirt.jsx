@@ -2,6 +2,7 @@ import { useSnapshot } from "valtio";
 import { useFrame } from "@react-three/fiber";
 import { Decal, useGLTF, useTexture } from "@react-three/drei";
 import { MeshStandardMaterial, RepeatWrapping, LinearFilter } from "three";
+import React from "react";
 
 import state from "../store";
 
@@ -11,28 +12,29 @@ const Shirt = () => {
 
   // Load textures
   const logoTexture = useTexture(snap.logoDecal);
-  const fullTexture = useTexture(snap.fullDecal); // Load the scrift_logo.png
+  const fullTexture = useTexture(snap.fullDecal);
 
   // Initialize material
   const material = new MeshStandardMaterial({
-    color: snap.color,
     roughness: 1,
   });
 
-  // Update material color on every frame
-  useFrame(() => {
-    material.color.set(snap.color);
-  });
-
-  // Apply full texture if enabled
-  if (snap.isFullTexture && fullTexture) {
-    fullTexture.wrapS = RepeatWrapping;
-    fullTexture.wrapT = RepeatWrapping;
-    fullTexture.minFilter = LinearFilter;
-    fullTexture.magFilter = LinearFilter;
-    material.map = fullTexture;
-    material.needsUpdate = true;
-  }
+  // Handle material updates when texture or color changes
+  React.useEffect(() => {
+    if (snap.isFullTexture && fullTexture) {
+      fullTexture.wrapS = RepeatWrapping;
+      fullTexture.wrapT = RepeatWrapping;
+      fullTexture.minFilter = LinearFilter;
+      fullTexture.magFilter = LinearFilter;
+      material.map = fullTexture;
+      material.color.set('#ffffff'); // Reset to white when using full texture
+      material.needsUpdate = true;
+    } else {
+      material.map = null;
+      material.color.set(snap.color);
+      material.needsUpdate = true;
+    }
+  }, [snap.isFullTexture, snap.color, fullTexture]);
 
   const stateString = JSON.stringify(state);
 
@@ -44,7 +46,6 @@ const Shirt = () => {
         material={material}
         dispose={null}
       >
-        {/* Only render the logo decal if isLogoTexture is true */}
         {snap.isLogoTexture && (
           <Decal
             position={[-0.02, -0.02, 0.15]}
