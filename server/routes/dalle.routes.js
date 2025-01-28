@@ -1,16 +1,26 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
+import cors from 'cors';
 import { Configuration, OpenAIApi } from 'openai';
 
 dotenv.config();
 
 const router = express.Router()
 
+// CORS Options
+const corsOptions = {
+    origin: 'https://aicustomshirtbuilder.vercel.app', // Replace with your frontend origin
+    methods: ['GET', 'POST'], // Allow these HTTP methods
+    allowedHeaders: ['Content-Type'], // Allow these headers
+};
+
 const config = new Configuration (
     {
         apiKey: process.env.OPENAI_API_KEY,
     }
 )
+  
+router.use(cors(corsOptions));
 
 const openai = new OpenAIApi(config)
 
