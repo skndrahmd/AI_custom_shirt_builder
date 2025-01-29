@@ -2,8 +2,7 @@ import { useSnapshot } from "valtio";
 import { useFrame } from "@react-three/fiber";
 import { Decal, useGLTF, useTexture } from "@react-three/drei";
 import { MeshStandardMaterial, RepeatWrapping, LinearFilter } from "three";
-import React from "react";
-
+import React, { useRef } from "react";
 import state from "../store";
 
 const Shirt = () => {
@@ -14,39 +13,37 @@ const Shirt = () => {
   const logoTexture = useTexture(snap.logoDecal);
   const fullTexture = useTexture(snap.fullDecal);
 
-  // Initialize material
-  const material = new MeshStandardMaterial({
-    roughness: 1,
-  });
+  // Material reference to ensure updates
+  const materialRef = useRef(new MeshStandardMaterial({ roughness: 1 }));
 
-  // Handle material updates when texture or color changes
-  React.useEffect(() => {
+  // Update textures in each frame
+  useFrame(() => {
     if (snap.isFullTexture && fullTexture) {
       fullTexture.wrapS = RepeatWrapping;
       fullTexture.wrapT = RepeatWrapping;
       fullTexture.minFilter = LinearFilter;
       fullTexture.magFilter = LinearFilter;
-      material.map = fullTexture;
-      material.color.set('#ffffff'); // Reset to white when using full texture
-      material.needsUpdate = true;
-    } else {
-      material.map = null;
-      material.color.set(snap.color);
-      material.needsUpdate = true;
-    }
-  }, [snap.isFullTexture, snap.color, fullTexture]);
 
-  const stateString = JSON.stringify(state);
+      materialRef.current.map = fullTexture;
+      materialRef.current.color.set("#ffffff"); // Reset color to white for full texture
+    } else {
+      materialRef.current.map = null;
+      materialRef.current.color.set(snap.color);
+    }
+
+    materialRef.current.needsUpdate = true;
+  });
 
   return (
-    <group key={stateString}>
+    <group>
       <mesh
         castShadow
         geometry={nodes.T_Shirt_male.geometry}
-        material={material}
+        material={materialRef.current}
         dispose={null}
       >
-        {snap.isLogoTexture && (
+        {/* Toggle the logo based on state */}
+        {snap.isLogoTexture && snap.logoDecal && (
           <Decal
             position={[-0.02, -0.02, 0.15]}
             rotation={[0, 0, 0]}

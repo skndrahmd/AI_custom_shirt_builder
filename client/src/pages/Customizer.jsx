@@ -84,27 +84,36 @@ const Customizer = () => {
     }
   }
 
-  const handleDecals = (type, result) => {
-    const decalType = DecalTypes[type];
-
-    state[decalType.stateProperty] = result;
-
-    if (!activeFilterTab[decalType.filterTab]) {
-      handleActiveFilterTab(decalType.filterTab);
-    }
-  };
-
+  // const handleActiveFilterTab = (tabName) => {
+  //   setActiveFilterTab((prevState) => {
+  //     const newState = {
+  //       ...prevState,
+  //       [tabName]: !prevState[tabName], // Toggle only the selected filter
+  //     };
+  
+  //     // Toggle logo visibility without affecting the shirt’s color or texture
+  //     if (tabName === "logoShirt") {
+  //       state.isLogoTexture = !state.isLogoTexture; // Toggle logo on/off
+  //     } else if (tabName === "stylishShirt") {
+  //       state.isFullTexture = true;  // Switch to stylish mode
+  //       state.isLogoTexture = state.logoDecal ? true : state.isLogoTexture; // Keep the logo
+  //     }
+  
+  //     return newState;
+  //   });
+  // };
+    
   const handleActiveFilterTab = (tabName) => {
     switch (tabName) {
       case "logoShirt":
-        state.isLogoTexture = !activeFilterTab[tabName];
+        state.isLogoTexture = !state.isLogoTexture;
         break;
       case "stylishShirt":
         state.isFullTexture = !activeFilterTab[tabName];
         break;
       default:
-        state.isLogoTexture = true;
-        state.isFullTexture = false;
+        state.isLogoTexture = state.logoDecal ? true : state.isLogoTexture;
+         state.isFullTexture = false;
         break;
     }
 
@@ -115,6 +124,24 @@ const Customizer = () => {
       };
     });
   };
+
+  const handleDecals = (type, result) => {
+    const decalType = DecalTypes[type];
+
+    state[decalType.stateProperty] = result;
+
+    if (!activeFilterTab[decalType.filterTab]) {
+      handleActiveFilterTab(decalType.filterTab);
+    }
+  };
+  
+  
+
+  
+
+  
+  
+
 
   const readFile = (type) => {
     reader(file).then((result) => {
