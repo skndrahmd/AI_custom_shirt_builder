@@ -14,7 +14,7 @@ app.use('/api/v1/dalle', router)
 
 // Configure CORS options
 const corsOptions = {
-    origin: 'https://aicustomshirtbuilder.vercel.app', // Allow only this origin
+    origin: ['https://aicustomshirtbuilder.vercel.app', 'https://aicustomshirtbuilder-3r7dnubw1-hamza-ahmed-sheikhs-projects.vercel.app'], // Allow only this origin
     methods: ['GET', 'POST'], // Allow specific HTTP methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
     credentials: true, // Allow cookies to be sent
