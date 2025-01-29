@@ -9,7 +9,7 @@ const router = express.Router()
 
 // CORS Options
 const corsOptions = {
-    origin: ['https://aicustomshirtbuilder.vercel.app', 'http://localhost:8080/api/v1/dalle'], // Replace with your frontend origin
+    origin: 'https://aicustomshirtbuilder.vercel.app', // Replace with your frontend origin
     methods: ['GET', 'POST'], // Allow these HTTP methods
     allowedHeaders: ['Content-Type'], // Allow these headers
 };
