@@ -7,21 +7,21 @@ dotenv.config();
 
 const app = express();
 // app.use(cors());
+const corsOptions = {
+    origin: ['https://aicustomshirtbuilder.vercel.app', 'https://aicustomshirtbuilder-3r7dnubw1-hamza-ahmed-sheikhs-projects.vercel.app'], 
+    methods: ['GET', 'POST', 'OPTIONS'], // Ensure OPTIONS is allowed for preflight
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allow necessary headers
+    credentials: true, // Allow cookies if needed
+};
+
+// Apply CORS before other middleware
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Handle preflight requests globally
+
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb'}));
+
 app.use('/api/v1/dalle', router)
-
-
-// Configure CORS options
-const corsOptions = {
-    origin: ['https://aicustomshirtbuilder.vercel.app', 'https://aicustomshirtbuilder-3r7dnubw1-hamza-ahmed-sheikhs-projects.vercel.app'], // Allow only this origin
-    methods: ['GET', 'POST'], // Allow specific HTTP methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
-    credentials: true, // Allow cookies to be sent
-  };
-  
-  // Apply CORS middleware
-app.use(cors(corsOptions));
 
 app.get('/' , (req, res) => {
     res.status(200).json({message: "Hello from dalle"})

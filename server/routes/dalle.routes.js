@@ -9,10 +9,14 @@ const router = express.Router()
 
 // CORS Options
 const corsOptions = {
-    origin: ['https://aicustomshirtbuilder.vercel.app', "https://aicustomshirtbuilder-3r7dnubw1-hamza-ahmed-sheikhs-projects.vercel.app"], // Replace with your frontend origin
-    methods: ['GET', 'POST'], // Allow these HTTP methods
-    allowedHeaders: ['Content-Type'], // Allow these headers
+    origin: ['https://aicustomshirtbuilder.vercel.app', "https://aicustomshirtbuilder-3r7dnubw1-hamza-ahmed-sheikhs-projects.vercel.app"], 
+    methods: ['GET', 'POST', 'OPTIONS'], 
+    allowedHeaders: ['Content-Type', 'Authorization'],
 };
+
+// Ensure preflight handling for API routes
+router.use(cors(corsOptions));
+router.options('*', cors(corsOptions)); 
 
 const config = new Configuration (
     {

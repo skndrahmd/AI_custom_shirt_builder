@@ -60,10 +60,7 @@ const Customizer = () => {
       const response = await fetch('https://ai-custom-shirt-builder.onrender.com/api/v1/dalle', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          // 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+          'Content-Type': 'application/json', // Remove unnecessary CORS headers
         },
         body: JSON.stringify({
           prompt,
